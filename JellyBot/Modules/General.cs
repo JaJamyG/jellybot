@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace JellyBot.core.Modules
 {
-    public class General : ModuleBase
+    public class General : ModuleBase<SocketCommandContext>
     {
         [Command("ping")]
         public async Task Ping()

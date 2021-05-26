@@ -1,55 +1,51 @@
 ﻿using Discord.Commands;
 using Discord.WebSocket;
+using Discord;
+using Discord.Addons.Hosting;
+using Discord.Commands;
+using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+
 
 namespace JellyBot.core.Services
 {
-    public class CommandHandler
+    public class CommandHandler : InitializedService
     {
-        public static IServiceProvider _provider;
-        public static DiscordSocketClient _discord;
-        public static CommandService _commands;
-        public static IConfigurationRoot _config;
-        public CommandHandler(IServiceProvider provider, DiscordSocketClient discord, CommandService commands, IConfigurationRoot config)
-        {
-            _provider = provider;
-            _config = config;
-            _discord = discord;
-            _commands = commands;
+        private readonly IServiceProvider provider;
+        private readonly DiscordSocketClient client;
+        private readonly CommandService service;
+        private readonly IConfiguration configuration;
 
-            _discord.Ready += OnReady;
-            _discord.MessageReceived += OnMessageReceived;
+        public CommandHandler(IServiceProvider provider, DiscordSocketClient client, CommandService service, IConfiguration configuration)
+        {
+            this.provider = provider;
+            this.client = client;
+            this.service = service;
+            this.configuration = configuration;
         }
 
-        private async Task OnMessageReceived(SocketMessage arg)
+        public override async Task InitializeAsync(CancellationToken cancellationToken)
         {
-            var msg = arg as SocketUserMessage;
-            if (msg.Author.IsBot) return;
-            var context = new SocketCommandContext(_discord, msg);
-
-            int pos = 0;
-            if (msg.HasStringPrefix(_config["prefix"], ref pos) || msg.HasMentionPrefix(_discord.CurrentUser, ref pos))
-            {
-                var result = await _commands.ExecuteAsync(context, pos, _provider);
-
-                if (!result.IsSuccess)
-                {
-                    var reason = result.Error;
-
-                    await context.Channel.SendMessageAsync($"The following error occured: \n {reason}");
-                    Console.WriteLine(reason);
-                }
-            }
+            this.client.MessageReceived += OnMessageReceived;
+            await this.service.AddModulesAsync(Assembly.GetEntryAssembly(), this.provider);
         }
 
-        private Task OnReady()
+        private async Task OnMessageReceived(SocketMessage socketMessage)
         {
-            Console.WriteLine($"Connectedd as {_discord.CurrentUser.Username}#{_discord.CurrentUser.Discriminator}");
-            return Task.CompletedTask;
+            if (!(socketMessage is SocketUserMessage message)) return;
+            if (message.Source != MessageSource.User) return;
+
+            var argPos = 0;
+            if (!message.HasStringPrefix(this.configuration["Prefix"], ref argPos) && !message.HasMentionPrefix(this.client.CurrentUser, ref argPos)) return;
+
+            var context = new SocketCommandContext(this.client, message);
+            await this.service.ExecuteAsync(context, argPos, this.provider);
         }
     }
 }

@@ -57,6 +57,10 @@
               "target": "Package",
               "version": "[4.1.0-nightly-00866, )"
             },
+            "Discord.Addons.Hosting": {
+              "target": "Package",
+              "version": "[3.1.1, )"
+            },
             "Discord.Net": {
               "target": "Package",
               "version": "[2.4.0, )"
@@ -78,6 +82,10 @@
               "version": "[2.4.0, )"
             },
             "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[6.0.0-preview.4.21253.7, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
               "version": "[6.0.0-preview.4.21253.7, )"
             },
