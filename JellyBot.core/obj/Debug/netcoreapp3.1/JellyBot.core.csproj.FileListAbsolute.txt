@@ -1,0 +1,9 @@
+C:\Users\jamyv\source\repos\JellyBot\JellyBot.core\bin\Debug\netcoreapp3.1\JellyBot.core.deps.json
+C:\Users\jamyv\source\repos\JellyBot\JellyBot.core\bin\Debug\netcoreapp3.1\JellyBot.core.dll
+C:\Users\jamyv\source\repos\JellyBot\JellyBot.core\bin\Debug\netcoreapp3.1\JellyBot.core.pdb
+C:\Users\jamyv\source\repos\JellyBot\JellyBot.core\obj\Debug\netcoreapp3.1\JellyBot.core.csprojAssemblyReference.cache
+C:\Users\jamyv\source\repos\JellyBot\JellyBot.core\obj\Debug\netcoreapp3.1\JellyBot.core.AssemblyInfoInputs.cache
+C:\Users\jamyv\source\repos\JellyBot\JellyBot.core\obj\Debug\netcoreapp3.1\JellyBot.core.AssemblyInfo.cs
+C:\Users\jamyv\source\repos\JellyBot\JellyBot.core\obj\Debug\netcoreapp3.1\JellyBot.core.csproj.CoreCompileInputs.cache
+C:\Users\jamyv\source\repos\JellyBot\JellyBot.core\obj\Debug\netcoreapp3.1\JellyBot.core.dll
+C:\Users\jamyv\source\repos\JellyBot\JellyBot.core\obj\Debug\netcoreapp3.1\JellyBot.core.pdb
